@@ -29,5 +29,5 @@ info "** Starting Elasticsearch **"
 if am_i_root; then
     exec gosu "$ELASTICSEARCH_DAEMON_USER" "$EXEC" "${ARGS[@]}"
 else
-    exec "$EXEC" "${ARGS[@]}" "-v"
+    exec "$EXEC" "${ARGS[@]}"
 fi
