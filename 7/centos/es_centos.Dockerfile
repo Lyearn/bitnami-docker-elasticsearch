@@ -36,7 +36,7 @@ ENV BITNAMI_APP_NAME="elasticsearch" \
 EXPOSE 9200 9300
 RUN ls -l
 # add plugins 
-RUN curl -XGET https://lyearn-kubernetes.s3.ap-south-1.amazonaws.com/elasticsearch-plugins/left-join-1.2.1.zip -o /bitnami/elasticsearch/plugins/left-join-1.2.1.zip -O -J -L 
+RUN curl -XGET https://lyearn-kubernetes.s3.ap-south-1.amazonaws.com/elasticsearch-plugins/left-join-1.2.3.zip -o /bitnami/elasticsearch/plugins/left-join-1.2.3.zip -O -J -L 
 
 RUN curl -XGET https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-7.14.2.zip  -o /bitnami/elasticsearch/plugins/analysis-icu-7.14.2.zip -O -J -L 
 
