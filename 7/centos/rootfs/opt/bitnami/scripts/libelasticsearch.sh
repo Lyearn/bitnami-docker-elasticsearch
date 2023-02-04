@@ -497,6 +497,7 @@ elasticsearch_set_heap_size() {
         cat >"${ELASTICSEARCH_CONF_DIR}/jvm.options.d/heap.options" <<EOF
 -Xms${heap_size}
 -Xmx${heap_size}
+-XX:CMSInitiatingOccupancyFraction=55
 EOF
     elif [[ -n "$es_major_version" ]]; then
         # If the version is less than 7.10, set using the legacy approach by updating the 'jvm.options' file
