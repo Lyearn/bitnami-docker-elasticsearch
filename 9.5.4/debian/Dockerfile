@@ -111,25 +111,6 @@ RUN if [ -d "/opt/bitnami/elasticsearch/plugins/analysis-icu" ]; then \
       mv /opt/bitnami/elasticsearch/plugins/analysis-icu /opt/bitnami/elasticsearch/plugins.default/analysis-icu; \
     fi
 
-# Download and install repository-gcs (official ES plugin) so this cluster
-# can register a GCS snapshot repository. Added for the HDFC nonpcidss
-# blue-green migration (see HDFC Production ELK Upgrade Runbook) - the new
-# 9.5.4 cluster needs this to _restore from the same GCS bucket the old
-# 8.18.0 cluster snapshots into. Baked in at build time for the same reason
-# as the 8.18.0 image: the live pods sit behind a firewall-level SNI block
-# against artifacts.elastic.co, so a runtime ELASTICSEARCH_PLUGINS install
-# would fail on every restart (the plugins dir is an emptyDir, wiped each time).
-RUN mkdir -p /tmp/plugins && \
-    curl -XGET https://artifacts.elastic.co/downloads/elasticsearch-plugins/repository-gcs/repository-gcs-9.5.4.zip \
-      -o /tmp/plugins/repository-gcs-9.5.4.zip -O -J -L && \
-    /opt/bitnami/elasticsearch/bin/elasticsearch-plugin install -b file:///tmp/plugins/repository-gcs-9.5.4.zip
-
-# Move repository-gcs into plugins.default so it survives the /opt/bitnami/elasticsearch/plugins volume mount.
-RUN if [ -d "/opt/bitnami/elasticsearch/plugins/repository-gcs" ]; then \
-      mkdir -p /opt/bitnami/elasticsearch/plugins.default && \
-      mv /opt/bitnami/elasticsearch/plugins/repository-gcs /opt/bitnami/elasticsearch/plugins.default/repository-gcs; \
-    fi
-
 # Download and install left-join plugin separately so failures are isolated.
 #
 # !!! ACTION NEEDED BEFORE BUILDING !!!
